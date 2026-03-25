@@ -54,7 +54,7 @@ export class ReactiveForm {
       
     }
   }
-
+      
    checkUser(){
     const control = this.signupform.get('name');
 
