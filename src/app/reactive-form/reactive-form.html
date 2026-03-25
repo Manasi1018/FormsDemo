@@ -1,0 +1,76 @@
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+<form [formGroup]="signupform" (ngSubmit)="onSave()">
+<label class="form-label" >Name:</label>
+<input class="form-control" type="text" formControlName="name" placeholder="enter name">
+<div class="text-danger" *ngIf="signupform.get('name')?.touched && signupform.get('name')?.hasError('required')">Required Field</div>
+<div class="text-danger" *ngIf="signupform.get('name')?.touched && signupform.get('name')?.hasError('minlength')">minLength 2</div>
+
+<br><br>
+<label>Email</label>
+<input class="form-control" type="email" formControlName="email" placeholder="enter email">
+<div  class="text-danger" *ngIf="signupform.get('email')?.touched && signupform.get('email')?.hasError('required')">Email is Required</div>
+<div *ngIf="signupform.get('email')?.touched && signupform.get('email')?.hasError('email')">Enter Valid email</div>
+
+<br>
+<label>Password</label>
+<input class="form-control" type="password" formControlName="password">
+
+<br>
+
+<label>Confirm Password</label>
+<input class="form-control" type="password" formControlName="confirmPassword">
+<br>
+<div class="text-danger"
+*ngIf="signupform.hasError('passwordMismatch') && signupform.get('confirmPassword')?.touched">
+Passwords do not match
+</div>
+
+<label>Gender</label>
+<input class="form-check-input" type="radio" formControlName="gender" value="Male">Male
+<input class="form-check-input" type="radio" formControlName="gender" value="Female">Female
+<br>
+
+<label for="address">Address</label>
+<div formGroupName="address">
+  <label for="street">Street</label>
+  <input class="form-control" type="text" formControlName="street">
+  <div class="text-danger" *ngIf="signupform.get('address.street')?.touched && signupform.get('address.street')?.hasError('required')">Street Required</div>
+  <br>
+  <label for="city">City</label>
+  <input   class="form-control" type="text" formControlName="city">
+  <br>
+  <label for="street">PinCode</label>
+  <input  class="form-control" type="text" formControlName="pincode">
+</div>
+<br>
+
+<div  formArrayName="phones">
+  <div *ngFor="let phone of phones.controls;let i=index">
+    <input type="text" [formControlName]="i">
+    <button type="button" (click)="removePhones(i)">Remove</button>
+  </div>
+</div>
+<br>
+<button type="button" (click)="checkUser()">Check</button>
+
+<p *ngIf="signupform.get('name')?.errors?.['usernameTaken']">
+Username already taken
+</p>
+<br>
+<br>
+<button type="button" (click)="addPhones()">Add Phone</button>
+
+<br>
+<br>
+
+
+<!-- <button class="btn btn-success" type="submit" [disabled]="signupform.invalid">Save</button> -->
+ <button class="btn btn-success" type="submit" >Save</button>
+<br>
+<button class="btn btn-info" type="button" (click)="fillData()">Auto Fill Form</button>
+
+</form>
+<pre>{{this.signupform.value|json}}</pre>
+    </div>
+  </div>
